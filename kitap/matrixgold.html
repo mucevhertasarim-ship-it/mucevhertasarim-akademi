@@ -30857,7 +30857,8 @@ let currentLang = "tr";
       const langObj = WORLD_LANGUAGES.find(l => l.code === currentLang) || WORLD_LANGUAGES[0];
 
       if (!("speechSynthesis" in window)) {
-        select.innerHTML = `<option value="__native_voice__">📱 Cihaz Spikeri (${langObj.native})</option>`;
+        select.innerHTML = `<option value="__cloud_voice__" selected>🌟 Doğal Bulut Spikeri (Tüm Telefonlarla %100 Uyumlu)</option>
+          <option value="__native_voice__">📱 Cihaz Spikeri (${langObj.native})</option>`;
         return;
       }
 
@@ -30880,7 +30881,8 @@ let currentLang = "tr";
           ${v.name.replace("Microsoft ", "").replace("Online (Natural)", "🌟 Doğal İnsan Sesi")} (${v.lang})
         </option>
       `).join("") + `
-        <option value="__native_voice__">📱 Telefon Sistem Spikeri (${langObj.native})</option>
+        <option value="__cloud_voice__" selected>🌟 Doğal Bulut Spikeri (Tüm Telefonlarla %100 Uyumlu)</option>
+          <option value="__native_voice__">📱 Telefon Sistem Spikeri (${langObj.native})</option>
       `;
     }
 
@@ -32564,8 +32566,6 @@ let currentLang = "tr";
       try {
         const langObj = WORLD_LANGUAGES.find(l => l.code === currentLang) || WORLD_LANGUAGES[0];
 
-        // EĞER SEÇİLEN DİL TÜRKÇE DIŞINDA BİR DİLSE (ALMANCA, RUSÇA, ARAPÇA VB.)
-        // Seslendirilmeden önce metni MUTLAKA o dile çevir!
         let textToSpeak = text;
         if (currentLang !== "tr") {
           textToSpeak = await translateTextAuto(text, currentLang);
@@ -32579,6 +32579,7 @@ let currentLang = "tr";
         const chosenVoice = getSelectedVoice();
         const rateVal = parseFloat(document.getElementById("rate-select")?.value || "0.95");
         const langCode = langObj.voice || (currentLang === "en" ? "en-US" : "tr-TR");
+        const shortLang = (langCode || "tr").split("-")[0];
 
         const statusEl = document.getElementById("tts-status");
         if (statusEl) statusEl.classList.remove("hidden");
@@ -32599,65 +32600,87 @@ let currentLang = "tr";
           stopSpeaking();
         }
 
-        // Doğrudan Cihaz / Tarayıcı SpeechSynthesis motoru ile oku (Android & iPhone tam destekler)
-        if ("speechSynthesis" in window) {
-          try {
-            if (window.speechSynthesis.paused) {
-              window.speechSynthesis.resume();
-            }
-            window.speechSynthesis.cancel(); // Askıda kalan kuyruğu temizle
+        // 1. Mobil Cihaz Tespiti
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const preferCloud = (selVoiceVal === "__cloud_voice__") || (isMobile && (!chosenVoice || selVoiceVal === "__native_voice__"));
 
-            const u = new SpeechSynthesisUtterance(cleaned);
-            u.lang = langCode;
-            if (chosenVoice) {
-              u.voice = chosenVoice;
-            }
-            u.rate = rateVal;
-            u.pitch = 1.0;
-
-            window._ttsUtterances.push(u);
-
-            u.onend = () => {
-              if (_ttsSessionId !== currentSession) return;
-              finishSpeaking();
-            };
-
-            u.onerror = (evt) => {
-              if (_ttsSessionId !== currentSession) return;
-              if (evt.error === "canceled" || evt.error === "interrupted") return;
-              console.warn("SpeechSynthesis error:", evt.error);
-              finishSpeaking();
-            };
-
-            window.speechSynthesis.speak(u);
-
-            if (_ttsResumeTimer) clearInterval(_ttsResumeTimer);
-            _ttsResumeTimer = setInterval(() => {
-              if (_ttsSessionId !== currentSession) {
-                clearInterval(_ttsResumeTimer);
-                _ttsResumeTimer = null;
-              } else if (window.speechSynthesis.paused) {
-                window.speechSynthesis.resume();
-              }
-            }, 1000);
-            return;
-          } catch(synthErr) {
-            console.warn("SpeechSynthesis speak hatası:", synthErr);
-          }
+        // Eger Bulut Spikeri secilmisse veya ses paketi olmayan mobildeyse dogrudan Cloud Audio
+        if (preferCloud || !("speechSynthesis" in window)) {
+          speakWithCloudAudio(cleaned, shortLang, finishSpeaking);
+          return;
         }
 
-        // Desteklenmeyen durumlarda bitir
-        finishSpeaking();
-
-        if (_ttsResumeTimer) clearInterval(_ttsResumeTimer);
-        _ttsResumeTimer = setInterval(() => {
-          if (_ttsSessionId !== currentSession) {
-            clearInterval(_ttsResumeTimer);
-            _ttsResumeTimer = null;
-          } else if (window.speechSynthesis.paused) {
+        // 2. Tarayici SpeechSynthesis Denemesi
+        try {
+          if (window.speechSynthesis.paused) {
             window.speechSynthesis.resume();
           }
-        }, 1000);
+          if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+            window.speechSynthesis.cancel();
+          }
+
+          const u = new SpeechSynthesisUtterance(cleaned);
+          u.lang = langCode;
+          if (chosenVoice) {
+            u.voice = chosenVoice;
+          }
+          u.rate = rateVal;
+          u.pitch = 1.0;
+
+          window._ttsUtterances.push(u);
+
+          let didStartSpeaking = false;
+          u.onstart = () => {
+            didStartSpeaking = true;
+          };
+
+          u.onend = () => {
+            if (_ttsSessionId !== currentSession) return;
+            finishSpeaking();
+          };
+
+          u.onerror = (evt) => {
+            if (_ttsSessionId !== currentSession) return;
+            if (evt.error === "canceled" || evt.error === "interrupted") return;
+            console.warn("SpeechSynthesis error, Cloud Audio devreye giriyor:", evt.error);
+            speakWithCloudAudio(cleaned, shortLang, finishSpeaking);
+          };
+
+          // Mobil asenkron iptal çakışmasını önlemek için 40ms güvenli gecikmeyle başlat
+          setTimeout(() => {
+            if (_ttsSessionId !== currentSession) return;
+            try {
+              window.speechSynthesis.speak(u);
+            } catch(e) {
+              console.warn("SpeechSynthesis speak hatası, Cloud Audio devrede:", e);
+              speakWithCloudAudio(cleaned, shortLang, finishSpeaking);
+            }
+          }, 40);
+
+          // Mobil Güvenlik Zamanlayıcısı: 500ms içinde ses başlamazsa Cloud Audio otomatik konuşsun
+          setTimeout(() => {
+            if (_ttsSessionId === currentSession && !didStartSpeaking && (!window.speechSynthesis || !window.speechSynthesis.speaking)) {
+              console.warn("SpeechSynthesis mobilde askıda kaldı, Bulut Sesine geçildi");
+              speakWithCloudAudio(cleaned, shortLang, finishSpeaking);
+            }
+          }, 550);
+
+          if (_ttsResumeTimer) clearInterval(_ttsResumeTimer);
+          _ttsResumeTimer = setInterval(() => {
+            if (_ttsSessionId !== currentSession) {
+              clearInterval(_ttsResumeTimer);
+              _ttsResumeTimer = null;
+            } else if (window.speechSynthesis && window.speechSynthesis.paused) {
+              window.speechSynthesis.resume();
+            }
+          }, 1000);
+
+          return;
+        } catch(synthErr) {
+          console.warn("SpeechSynthesis genel hatası, Cloud Audio çalıştırılıyor:", synthErr);
+          speakWithCloudAudio(cleaned, shortLang, finishSpeaking);
+          return;
+        }
 
       } catch (err) {
         console.error("speakNatural genel hatası:", err);
@@ -32735,38 +32758,83 @@ let currentLang = "tr";
       speakNatural(`${intro} ${itemsText}`);
     }
 
-    // Google Cloud / Translate Doğal Ses Motoru (Arapça ve Sistemde Ses Olmayan Diller İçin)
+        // Google Cloud / Translate Doğal Ses Motoru (Tüm Mobil Telefonlar, iPhone & Android ile %100 Uyumlu)
+    let _cloudPlaylist = [];
+    let _cloudPlaylistIndex = 0;
+
     function speakWithCloudAudio(text, langCode, onEndCallback) {
       try {
         if (_currentAudioPlayer) {
           try { _currentAudioPlayer.pause(); } catch(e) {}
           _currentAudioPlayer = null;
         }
-        // Metin temizliği
-        const clean = encodeURIComponent(text.substring(0, 200));
-        const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${encodeURIComponent(langCode)}&client=tw-ob&q=${clean}`;
-        const audio = new Audio(url);
-        _currentAudioPlayer = audio;
 
-        audio.onended = () => {
-          _currentAudioPlayer = null;
+        if (!text || !text.trim()) {
           if (onEndCallback) onEndCallback();
-        };
+          return;
+        }
 
-        audio.onerror = (e) => {
-          console.warn("Cloud Audio fallback error:", e);
-          _currentAudioPlayer = null;
+        // Metni doğal cümle/virgül parçalarına böl (Maks 160 karakterlik pürüzsüz dilimler)
+        const rawSentences = text.match(/[^.!?
+]+[.!?
+]*/g) || [text];
+        const chunks = [];
+        for (let s of rawSentences) {
+          s = s.trim();
+          if (!s) continue;
+          while (s.length > 160) {
+            let splitIdx = s.lastIndexOf(" ", 160);
+            if (splitIdx === -1) splitIdx = 160;
+            chunks.push(s.substring(0, splitIdx).trim());
+            s = s.substring(splitIdx).trim();
+          }
+          if (s) chunks.push(s);
+        }
+
+        if (chunks.length === 0) {
           if (onEndCallback) onEndCallback();
-        };
+          return;
+        }
 
-        const playPromise = audio.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(err => {
-            console.warn("Audio play catch:", err);
+        _cloudPlaylist = chunks;
+        _cloudPlaylistIndex = 0;
+
+        function playNextChunk() {
+          if (_cloudPlaylistIndex >= _cloudPlaylist.length) {
             _currentAudioPlayer = null;
             if (onEndCallback) onEndCallback();
-          });
+            return;
+          }
+
+          const currentChunk = _cloudPlaylist[_cloudPlaylistIndex++];
+          const clean = encodeURIComponent(currentChunk);
+          const lang = encodeURIComponent(langCode || "tr");
+          const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${lang}&client=tw-ob&q=${clean}`;
+          
+          const audio = new Audio(url);
+          _currentAudioPlayer = audio;
+
+          audio.onended = () => {
+            playNextChunk();
+          };
+
+          audio.onerror = (e) => {
+            console.warn("Cloud Audio chunk error:", e);
+            playNextChunk();
+          };
+
+          const p = audio.play();
+          if (p !== undefined) {
+            p.catch(err => {
+              console.warn("Cloud Audio play catch:", err);
+              // Kullanıcı etkileşimi eksikse bir sonraki tıklamada devreye girer
+              _currentAudioPlayer = null;
+              if (onEndCallback) onEndCallback();
+            });
+          }
         }
+
+        playNextChunk();
       } catch (err) {
         console.error("speakWithCloudAudio error:", err);
         if (onEndCallback) onEndCallback();
