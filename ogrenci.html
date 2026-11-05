@@ -615,1801 +615,694 @@
 
 
     /* ==============================================================
-
-
-
-       📱 TELEFON VE TABLET ERGONOMİK DÜZENİ (TAM OTOMATİK DUYARLI DÜZEN)
-
-
-
+       📱 MODERN VE ULTRA ERGONOMİK TELEFON / TABLET DÜZENİ
+       (AKILLI AŞAMA DUYARLI: ÖDEME / CANLI DERS / YATAY SİNEMA)
        ============================================================== */
 
-
-
-
-
-
-
-    
-
-
-
-    /* Desktopta Mobil Menü Butonunu Gizle */
-
-
-
+    /* 1. MASAÜSTÜNDE MOBİL ELEMANLARI GİZLE (min-width: 901px) */
     @media (min-width: 901px) {
-
-
-
       #btnMobileNavToggle,
-
-
-
       #studentMobileNavDrawer,
-
-
-
-      .mobile-nav-btn {
-
-
-
+      .mobile-nav-btn,
+      #mobileStudentTabs,
+      #mobileTabAudio,
+      #mobileTabInfo {
         display: none !important;
-
-
-
       }
-
-
-
     }
 
-
-
-
-
-
-
-    /* Mobilde Kilitli/Giriş Ekranı: Sohbeti gizle, kayıt formunu ve bekleme durumunu tam ekran yap */
-
-
-
-    body.student-locked .studio-workspace #rightCol {
-
-
-
+    /* 2. 🔒 TÜM MOBİL / DAR EKRANLARDA KİLİTLİ & ÖDEME AŞAMASI (TAM ODAKLANMA) */
+    body.student-locked #rightCol,
+    body.student-locked #resizerStudentVert,
+    body.student-locked #resizerRight,
+    body.student-locked #resizerVert,
+    body.student-locked #studentMixerBar,
+    body.student-locked #mobileStudentTabs,
+    body.student-locked #mobileTabAudio,
+    body.student-locked #mobileTabInfo,
+    body.student-locked #centerCol .card-header {
       display: none !important;
-
-
-
     }
 
+    body.student-locked .studio-workspace {
+      display: flex !important;
+      flex-direction: column !important;
+      height: calc(100vh - 44px) !important;
+      height: calc(100dvh - 44px) !important;
+      overflow: hidden !important;
+    }
 
-
-    body.student-locked .studio-workspace #centerCol {
-
-
-
+    body.student-locked #centerCol {
+      width: 100% !important;
+      max-width: 100% !important;
       height: 100% !important;
-
-
-
       max-height: 100% !important;
-
-
-
-      flex: 1 1 auto !important;
-
-
-
+      flex: 1 1 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
     }
-
-
 
     body.student-locked .video-stage-card {
-
-
-
+      width: 100% !important;
       height: 100% !important;
-
-
-
+      max-height: 100% !important;
+      border: none !important;
+      border-radius: 0 !important;
+      background: transparent !important;
     }
-
-
 
     body.student-locked .video-wrapper {
-
-
-
+      width: 100% !important;
       height: 100% !important;
-
-
-
       max-height: 100% !important;
-
-
-
       flex: 1 1 auto !important;
-
-
-
+      min-height: 0 !important;
     }
 
+    body.student-locked #videoLockOverlay {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      padding: 16px 12px 40px 12px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      z-index: 100 !important;
+    }
 
+    body.student-locked #videoLockOverlayInner {
+      margin: 0 auto !important;
+      width: 100% !important;
+      max-width: 480px !important;
+      padding-bottom: 24px !important;
+    }
 
-
-
-
-
-    /* 1. TÜM MOBİL VE DAR EKRANLAR İÇİN GENEL KURALLAR (<= 900px veya <= 560px) */
-
-
-
+    /* 3. TÜM MOBİL VE DAR EKRANLAR GENEL KURALLAR (<= 900px veya <= 560px) */
     @media (max-width: 900px), (max-height: 560px) {
-
-
-
       body {
-
-
-
         overflow: hidden !important;
-
-
-
         position: fixed;
-
-
-
         width: 100%;
-
-
-
         height: 100%;
-
-
-
       }
-
-
-
-
-
-
 
       /* Navbar: Asla taşmayan, tek satır, derli toplu üst bar */
-
-
-
       .navbar {
-
-
-
         padding: 4px 8px !important;
-
-
-
         min-height: 42px !important;
-
-
-
         max-height: 44px !important;
-
-
-
         height: 44px !important;
-
-
-
         display: flex !important;
-
-
-
         flex-wrap: nowrap !important;
-
-
-
         align-items: center !important;
-
-
-
         justify-content: space-between !important;
-
-
-
         overflow: hidden !important;
-
-
-
       }
-
-
-
-
-
-
 
       .brand {
-
-
-
         display: flex !important;
-
-
-
         align-items: center !important;
-
-
-
         gap: 6px !important;
-
-
-
         flex-shrink: 0 !important;
-
-
-
       }
-
-
-
-
-
-
 
       .brand-title {
-
-
-
         font-size: 0.75rem !important;
-
-
-
         white-space: nowrap !important;
-
-
-
       }
-
-
-
-
-
-
 
       .brand-icon {
-
-
-
         font-size: 1.15rem !important;
-
-
-
       }
 
-
-
-
-
-
-
-      #studentHeaderSub {
-
-
-
+      #studentHeaderSub,
+      #studentInstructorBadge,
+      .brand .brand-sub-badge,
+      .brand-sub-badge {
         display: none !important;
-
-
-
       }
-
-
-
-
-
-
-
-      /* Mobilde üst barda ikinci/tekrar eden Eğitmen rozetini tamamen gizle (kırmızı taşmayı önler) */
-
-
-
-      #studentInstructorBadge {
-
-
-
-        display: none !important;
-
-
-
-      }
-
-
-
-
-
-
 
       /* Canlı Yayın Rozeti ve Sayaç */
-
-
-
       .badge-live {
-
-
-
         font-size: 0.65rem !important;
-
-
-
         padding: 2px 6px !important;
-
-
-
         white-space: nowrap !important;
-
-
-
       }
-
-
-
-
-
-
 
       #studentLessonTimerBox {
-
-
-
         font-size: 0.68rem !important;
-
-
-
         padding: 2px 6px !important;
-
-
-
         white-space: nowrap !important;
-
-
-
       }
-
-
-
-
-
-
 
       #studentNameDisplay {
-
-
-
         font-size: 0.75rem !important;
-
-
-
-        max-width: 80px !important;
-
-
-
+        max-width: 85px !important;
         white-space: nowrap !important;
-
-
-
         overflow: hidden !important;
-
-
-
         text-overflow: ellipsis !important;
-
-
-
       }
-
-
-
-
-
-
-
-      .brand .brand-sub-badge, .brand-sub-badge { display: none !important; }
-
-
 
       #btnMobileNavToggle {
-
-
-
         display: inline-flex !important;
-
-
-
         align-items: center !important;
-
-
-
         justify-content: center !important;
-
-
-
         gap: 6px !important;
-
-
-
         padding: 4px 10px !important;
-
-
-
         font-size: 0.8rem !important;
-
-
-
         height: 30px !important;
-
-
-
         flex-shrink: 0 !important;
-
-
-
         white-space: nowrap !important;
-
-
-
         cursor: pointer !important;
-
-
-
         z-index: 100 !important;
-
-
-
         touch-action: manipulation !important;
-
-
-
       }
 
-
-
-      .brand .brand-sub-badge {
-
-
-
-        display: none !important;
-
-
-
-      }
-
-
-
-
-
-
-
-      /* Mobilde gereksiz kalabalık yapan masaüstü ayar butonlarını gizle */
-
-
-
+      /* Mobilde gereksiz kalabalık yapan masaüstü butonlarını gizle */
       .desktop-nav-btn,
-
-
-
       .pc-only,
-
-
-
       #streamResolutionBadge,
-
-
-
       #btnPiP,
-
-
-
       #btnMobileLayoutToggle,
-
-
-
       #btnStageLayoutModal,
-
-
-
       #btnToggleLayoutStage,
-
-
-
       #btnToggleChat,
-
-
-
       #btnToggleLayoutNav,
-
-
-
       #btnToggleChatNav,
-
-
-
       #resizerRight,
-
-
-
       #resizerVert,
-
-
-
       #resizerStudentVert {
-
-
-
         display: none !important;
-
-
-
       }
 
-
-
-
-
-
-
-      /* Sahne Kart Başlığı: Asla 6 sıra halinde alt alta yığılmaz, tek satırda kalır */
-
-
-
+      /* Sahne Kart Başlığı */
       #centerCol .card-header {
-
-
-
         display: flex !important;
-
-
-
         flex-direction: row !important;
-
-
-
         justify-content: space-between !important;
-
-
-
         align-items: center !important;
-
-
-
         flex-wrap: nowrap !important;
-
-
-
         padding: 3px 8px !important;
-
-
-
         gap: 6px !important;
-
-
-
         min-height: 32px !important;
-
-
-
-        max-height: 36px !important;
-
-
-
-        height: 34px !important;
-
-
-
+        max-height: 34px !important;
+        height: 32px !important;
         overflow: hidden !important;
-
-
-
       }
-
-
-
-
-
-
 
       #centerCol .card-header > div:first-child {
-
-
-
         flex: 1 1 auto !important;
-
-
-
         min-width: 0 !important;
-
-
-
         overflow: hidden !important;
-
-
-
       }
-
-
-
-
-
-
 
       #centerCol .card-title {
-
-
-
         font-size: 0.75rem !important;
-
-
-
         white-space: nowrap !important;
-
-
-
         overflow: hidden !important;
-
-
-
         text-overflow: ellipsis !important;
-
-
-
-        max-width: 150px !important;
-
-
-
+        max-width: 160px !important;
         margin: 0 !important;
-
-
-
       }
-
-
-
-
-
-
 
       #lessonStatusSub {
-
-
-
         display: none !important;
-
-
-
       }
-
-
-
-
-
-
 
       .stage-controls-row,
-
-
-
       #stageControlsRow {
-
-
-
         display: flex !important;
-
-
-
         flex-direction: row !important;
-
-
-
         flex-wrap: nowrap !important;
-
-
-
         align-items: center !important;
-
-
-
         gap: 4px !important;
-
-
-
         flex-shrink: 0 !important;
-
-
-
       }
-
-
-
-
-
-
 
       /* Mobilde Yalnızca 3 Sade İkon Buton: Yenile, Tam Ekran, Çıkış */
-
-
-
       #btnManualReconnect,
-
-
-
       #btnStageFullscreen,
-
-
-
       #btnLeaveLesson {
-
-
-
         display: inline-flex !important;
-
-
-
         align-items: center !important;
-
-
-
         justify-content: center !important;
-
-
-
         padding: 3px 7px !important;
-
-
-
         height: 26px !important;
-
-
-
         min-width: 26px !important;
-
-
-
         font-size: 0.72rem !important;
-
-
-
         border-radius: 6px !important;
-
-
-
         white-space: nowrap !important;
-
-
-
       }
-
-
-
-
-
-
 
       #btnManualReconnect span,
-
-
-
       #btnStageFullscreen span,
-
-
-
       #btnLeaveLesson span {
-
-
-
         display: none !important;
-
-
-
       }
-
-
-
-
-
-
 
       #btnManualReconnect i,
-
-
-
       #btnStageFullscreen i,
-
-
-
       #btnLeaveLesson i {
-
-
-
         margin: 0 !important;
-
-
-
         font-size: 0.8rem !important;
-
-
-
       }
-
-
-
     }
 
-
-
-
-
-
-
-    /* 2. 📱 TELEFON DİK EKRAN (PORTRAIT) TAM DÜZEN: Video Üstte 16:9, Sohbet Altta %100 Genişlik */
-
-
-
-    @media (max-width: 600px) and (min-height: 521px) {
-
-
-
+    /* 4. 📱 TELEFON DİK EKRAN (PORTRAIT) CANLI DERS: 16:9 Video + Mobil Sekmeler */
+    @media (max-width: 768px) and (min-height: 521px) {
       .studio-workspace {
-
-
-
         display: flex !important;
-
-
-
         flex-direction: column !important;
-
-
-
         height: calc(100vh - 44px) !important;
-
-
-
         height: calc(100dvh - 44px) !important;
-
-
-
         overflow: hidden !important;
-
-
-
       }
-
-
-
-
-
-
 
       #centerCol {
-
-
-
         width: 100% !important;
-
-
-
         max-width: 100% !important;
-
-
-
-        height: var(--student-video-h, 58vh);
-
-
-
-        min-height: 160px !important;
-
-
-
+        height: auto !important;
         flex: 0 0 auto !important;
-
-
-
         display: flex !important;
-
-
-
         flex-direction: column !important;
-
-
-
-        padding: 4px 6px 2px 6px !important;
-
-
-
+        padding: 0 !important;
+        margin: 0 !important;
         box-sizing: border-box !important;
-
-
-
       }
-
-
 
       .video-stage-card {
-
-
-
-        height: 100% !important;
-
-
-
+        border-radius: 0 !important;
+        border: none !important;
+        border-bottom: 1.5px solid rgba(212, 175, 55, 0.3) !important;
         display: flex !important;
-
-
-
         flex-direction: column !important;
-
-
-
         overflow: hidden !important;
-
-
-
+        margin: 0 !important;
       }
-
-
-
-      #resizerStudentVert {
-
-
-
-        display: flex !important;
-
-
-
-        min-height: 28px !important;
-
-
-
-        height: 28px !important;
-
-
-
-        flex-shrink: 0 !important;
-
-
-
-        align-items: center !important;
-
-
-
-        justify-content: center !important;
-
-
-
-        touch-action: none !important;
-
-
-
-      }
-
-
-
-
-
-
-
-      .video-stage-card {
-
-
-
-        border-radius: 10px !important;
-
-
-
-        display: flex !important;
-
-
-
-        flex-direction: column !important;
-
-
-
-        overflow: hidden !important;
-
-
-
-        border: 1px solid rgba(212, 175, 55, 0.4) !important;
-
-
-
-      }
-
-
-
-
-
-
-
-      /* 16:9 formatı ile video sahnede dev siyah boşluk yapmadan tam oturur */
-
-
 
       .video-wrapper {
-
-
-
         width: 100% !important;
-
-
-
-        flex: 1 1 auto !important;
-
-
-
-        height: 100% !important;
-
-
-
-        min-height: 140px !important;
-
-
-
-        max-height: none !important;
-
-
-
+        aspect-ratio: 16 / 9 !important;
+        height: auto !important;
+        max-height: 38vh !important;
         background: #000 !important;
-
-
-
         display: flex !important;
-
-
-
         align-items: center !important;
-
-
-
         justify-content: center !important;
-
-
-
         overflow: hidden !important;
-
-
-
         position: relative !important;
-
-
-
       }
-
-
-
-
-
-
 
       #remoteVideo {
-
-
-
         width: 100% !important;
-
-
-
         height: 100% !important;
-
-
-
         object-fit: contain !important;
-
-
-
         background: #000 !important;
-
-
-
       }
 
-
-
-
-
-
-
-      #studentMixerBar {
-
-
-
-        height: 34px !important;
-
-
-
-        min-height: 34px !important;
-
-
-
-        max-height: 34px !important;
-
-
-
-        padding: 2px 8px !important;
-
-
-
-        font-size: 0.7rem !important;
-
-
-
+      /* Mobilde videonun altındaki daraltıcı mixer barı gizle (Sekmelerde ferah olarak sunulur) */
+      #studentMixerBar,
+      #resizerStudentVert,
+      #resizerRight,
+      #resizerVert {
+        display: none !important;
       }
 
-
-
-
-
-
-
-      /* Sohbet Sütunu Kalan Tüm Alanı Doldurur */
-
-
-
-      #rightCol {
-
-
-
+      /* MOBİL SEKMELER (SOHBET / SES MİKSERİ / DERS BİLGİSİ) */
+      #mobileStudentTabs {
         display: flex !important;
-
-
-
-        flex-direction: column !important;
-
-
-
         width: 100% !important;
-
-
-
-        max-width: 100% !important;
-
-
-
-        height: auto !important;
-
-
-
-        flex: 1 1 auto !important;
-
-
-
-        min-height: 160px !important;
-
-
-
-        padding: 2px 6px 6px 6px !important;
-
-
-
-        box-sizing: border-box !important;
-
-
-
-        overflow: hidden !important;
-
-
-
+        height: 42px !important;
+        min-height: 42px !important;
+        background: #080c18 !important;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.25) !important;
+        flex-shrink: 0 !important;
+        z-index: 20 !important;
       }
 
+      .mobile-tab-btn {
+        flex: 1 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 6px !important;
+        background: transparent !important;
+        border: none !important;
+        border-bottom: 3px solid transparent !important;
+        color: #94a3b8 !important;
+        font-size: 0.8rem !important;
+        font-weight: 700 !important;
+        cursor: pointer !important;
+        padding: 0 4px !important;
+        transition: all 0.2s ease !important;
+        touch-action: manipulation !important;
+      }
 
+      .mobile-tab-btn.active {
+        color: #fde047 !important;
+        border-bottom-color: #f59e0b !important;
+        background: rgba(245, 158, 11, 0.08) !important;
+      }
 
+      .mobile-tab-btn i {
+        font-size: 0.85rem !important;
+      }
 
-
-
+      /* SEKME 1: SOHBET (Kalan Alanı Doldurur) */
+      #rightCol {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+      }
 
       #studentRightCard {
-
-
-
         height: 100% !important;
-
-
-
         display: flex !important;
-
-
-
         flex-direction: column !important;
-
-
-
-        border-radius: 10px !important;
-
-
-
+        border-radius: 0 !important;
+        border: none !important;
+        background: #070a13 !important;
         overflow: hidden !important;
-
-
-
       }
-
-
-
-
-
-
 
       #studentRightCard .card-header {
-
-
-
-        padding: 6px 10px !important;
-
-
-
+        display: none !important;
       }
-
-
-
-
-
-
 
       #studentChatFeed {
-
-
-
         flex: 1 1 auto !important;
-
-
-
         min-height: 0 !important;
-
-
-
         overflow-y: auto !important;
-
-
-
-        padding: 8px !important;
-
-
-
+        -webkit-overflow-scrolling: touch !important;
+        padding: 8px 12px !important;
       }
-
-
-
-
-
-
 
       .chat-input-row {
-
-
-
-        padding: 6px 8px !important;
-
-
-
+        padding: 8px 10px !important;
+        background: #0a0e1a !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+        gap: 6px !important;
       }
-
-
-
-
-
-
 
       #studentChatInput {
-
-
-
-        font-size: 16px !important; /* iOS / Android zoom engelleme */
-
-
-
-        padding: 8px 12px !important;
-
-
-
+        font-size: 16px !important;
+        padding: 8px 14px !important;
+        border-radius: 20px !important;
       }
 
-
-
-
-
-
-
-      #videoLockOverlay {
-
-
-
-        padding: 14px 10px 24px 10px !important;
-
-
-
-      }
-
-
-
-
-
-
-
-      #videoLockOverlayInner {
-
-
-
+      /* SEKME 2 & 3: MOBİL SES & BİLGİ PANELLERİ */
+      .mobile-tab-content {
+        flex: 1 1 auto !important;
         width: 100% !important;
-
-
-
-        max-width: 440px !important;
-
-
-
+        min-height: 0 !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        background: #070a13 !important;
+        padding: 12px 14px 28px 14px !important;
+        box-sizing: border-box !important;
       }
-
-
-
     }
 
+    /* MOBİL SES MİKSERİ VE DERS BİLGİ KARTLARI STİLLERİ */
+    .mobile-audio-card,
+    .mobile-info-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+    }
 
+    .mobile-audio-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
 
+    .mobile-audio-channel {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
+    .mobile-audio-channel .channel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
+    .channel-badge {
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-mic { background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #34d399; }
+    .badge-cad { background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; color: #38bdf8; }
 
+    .channel-val {
+      font-family: monospace;
+      font-weight: 800;
+      font-size: 0.88rem;
+      color: #fff;
+    }
 
-    /* 3. 📱 TELEFON YATAY EKRAN (LANDSCAPE) MODU: Video %100 Tam Ekran Sinema Modu */
+    .btn-mute-toggle {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #cbd5e1;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
 
+    .touch-audio-slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      outline: none;
+      -webkit-appearance: none;
+      background: #1e293b;
+    }
+    .slider-gold { accent-color: #f59e0b; }
+    .slider-blue { accent-color: #38bdf8; }
 
+    .preset-row {
+      display: flex;
+      gap: 6px;
+    }
+    .preset-btn {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+      border-radius: 6px;
+      padding: 5px 0;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .preset-btn.active {
+      background: rgba(245, 158, 11, 0.2);
+      border-color: #f59e0b;
+      color: #fde047;
+    }
+    .preset-btn.boost {
+      color: #f87171;
+      border-color: rgba(239, 68, 68, 0.35);
+    }
 
+    .info-block {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .info-action-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .info-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+    }
+    .info-action-btn .icon { font-size: 22px; flex-shrink: 0; }
+    .info-action-btn .btn-text { flex: 1; min-width: 0; }
+    .info-action-btn .btn-text .title { font-size: 0.88rem; font-weight: 800; }
+    .info-action-btn .btn-text .desc { font-size: 0.72rem; color: #94a3b8; margin-top: 2px; }
+    .info-action-btn .arrow { font-size: 0.8rem; color: #64748b; }
+    .info-action-btn.gold { border-color: rgba(245, 158, 11, 0.4); }
+    .info-action-btn.gold .title { color: #fde047; }
+    .info-action-btn.green { border-color: rgba(16, 185, 129, 0.4); }
+    .info-action-btn.green .title { color: #34d399; }
+    .info-action-btn.blue { border-color: rgba(56, 189, 248, 0.4); }
+    .info-action-btn.blue .title { color: #38bdf8; }
+    .info-action-btn.red { border-color: rgba(239, 68, 68, 0.4); }
+    .info-action-btn.red .title { color: #fca5a5; }
+
+    /* 5. 📱 TELEFON YATAY EKRAN (LANDSCAPE) MODU: Video %100 Tam Ekran Sinema Modu */
     @media (max-height: 560px) and (orientation: landscape), (max-height: 520px) {
-
-
-
-      .navbar {
-
-
-
-        min-height: 32px !important;
-
-
-
-        max-height: 32px !important;
-
-
-
-        height: 32px !important;
-
-
-
-        padding: 1px 8px !important;
-
-
-
+      .navbar,
+      #mobileStudentTabs,
+      #mobileTabAudio,
+      #mobileTabInfo,
+      #rightCol,
+      #resizerRight,
+      #resizerVert,
+      #resizerStudentVert {
+        display: none !important;
       }
-
-
-
-
-
-
-
-      .brand-title {
-
-
-
-        font-size: 0.7rem !important;
-
-
-
-      }
-
-
-
-
-
-
-
-      .brand-icon {
-
-
-
-        font-size: 0.9rem !important;
-
-
-
-      }
-
-
-
-
-
-
-
-      .badge-live {
-
-
-
-        font-size: 0.6rem !important;
-
-
-
-        padding: 1px 4px !important;
-
-
-
-      }
-
-
-
-
-
-
-
-      #studentLessonTimerBox {
-
-
-
-        font-size: 0.62rem !important;
-
-
-
-        padding: 1px 4px !important;
-
-
-
-      }
-
-
-
-
-
-
 
       .studio-workspace {
-
-
-
-        height: calc(100vh - 32px) !important;
-
-
-
-        height: calc(100dvh - 32px) !important;
-
-
-
-        flex-direction: row !important;
-
-
-
+        height: 100vh !important;
+        height: 100dvh !important;
+        padding: 0 !important;
+        margin: 0 !important;
         overflow: hidden !important;
-
-
-
       }
-
-
-
-
-
-
-
-      /* Yatay ekranda sohbeti ve ayırıcıları gizle, videoya tam alan sağla */
-
-
-
-      #rightCol,
-
-
-
-      #resizerRight,
-
-
-
-      #resizerVert,
-
-
-
-      #resizerStudentVert {
-
-
-
-        display: none !important;
-
-
-
-      }
-
-
-
-
-
-
-
-      /* Video sahnesi tüm ekranı kaplar */
-
-
 
       #centerCol {
-
-
-
-        width: 100% !important;
-
-
-
-        max-width: 100% !important;
-
-
-
-        height: 100% !important;
-
-
-
-        max-height: 100% !important;
-
-
-
-        flex: 1 1 auto !important;
-
-
-
+        position: fixed !important;
+        inset: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        z-index: 1000 !important;
         padding: 0 !important;
-
-
-
         margin: 0 !important;
-
-
-
+        display: flex !important;
       }
-
-
-
-
-
-
 
       .video-stage-card {
-
-
-
         width: 100% !important;
-
-
-
         height: 100% !important;
-
-
-
         display: flex !important;
-
-
-
         flex-direction: column !important;
-
-
-
         border-radius: 0 !important;
-
-
-
         border: none !important;
-
-
-
         margin: 0 !important;
-
-
-
       }
-
-
-
-
-
-
 
       #centerCol .card-header {
-
-
-
-        min-height: 26px !important;
-
-
-
-        max-height: 26px !important;
-
-
-
-        height: 26px !important;
-
-
-
-        padding: 1px 8px !important;
-
-
-
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 50 !important;
+        background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, transparent 100%) !important;
+        border: none !important;
+        min-height: 36px !important;
+        height: 36px !important;
+        padding: 4px 12px !important;
       }
-
-
-
-
-
-
-
-      #centerCol .card-title {
-
-
-
-        font-size: 0.72rem !important;
-
-
-
-        max-width: 280px !important;
-
-
-
-      }
-
-
-
-
-
-
 
       .video-wrapper {
-
-
-
         flex: 1 1 auto !important;
-
-
-
         min-height: 0 !important;
-
-
-
-        height: auto !important;
-
-
-
+        height: 100% !important;
         width: 100% !important;
-
-
-
         display: flex !important;
-
-
-
         align-items: center !important;
-
-
-
         justify-content: center !important;
-
-
-
         background: #000 !important;
-
-
-
+        aspect-ratio: unset !important;
+        max-height: none !important;
       }
-
-
-
-
-
-
 
       #remoteVideo {
-
-
-
         width: 100% !important;
-
-
-
         height: 100% !important;
-
-
-
         object-fit: contain !important;
-
-
-
         background: #000 !important;
-
-
-
       }
-
-
-
-
-
-
-
-      #studentMixerBar {
-
-
-
-        height: 28px !important;
-
-
-
-        min-height: 28px !important;
-
-
-
-        max-height: 28px !important;
-
-
-
-        padding: 1px 8px !important;
-
-
-
-        font-size: 0.65rem !important;
-
-
-
-      }
-
-
-
     }
 
-
-
-
-
-
+    /* 6. 📖 DİJİTAL KİTAP MODALININ MOBİLDE SÜPER TEMİZ VE FERAH DÜZENİ */
+    @media (max-width: 768px) {
+      #studentDigitalBookModal {
+        padding: 0 !important;
+      }
+      #studentDigitalBookBox {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100% !important;
+        height: 100dvh !important;
+        border-radius: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+      .book-modal-header {
+        height: 44px !important;
+        min-height: 44px !important;
+        padding: 2px 10px !important;
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+      }
+      .book-sub-title,
+      .book-badge,
+      #btnToggleBookFullscreen,
+      .btn-book-demo {
+        display: none !important;
+      }
+      .book-title-main {
+        font-size: 0.88rem !important;
+      }
+      #studentDigitalBookModal iframe {
+        height: calc(100vh - 44px) !important;
+        height: calc(100dvh - 44px) !important;
+      }
+    }
 
     /* Mini Oyun Modalı Mobil Uyumluluk */
-
-
-
     #instructorPreparingOverlay {
-
-
-
       -webkit-overflow-scrolling: touch;
-
-
-
     }
-
-
-
     @media (max-height: 700px), (max-width: 600px) {
-
-
-
       #instructorPreparingOverlay {
-
-
-
         justify-content: flex-start !important;
-
-
-
         padding-top: 14px !important;
-
-
-
         padding-bottom: 30px !important;
-
-
-
       }
-
-
-
     }
-
-
-
 </style>
 
 
@@ -8509,7 +7402,141 @@
 
 
 
-    <!-- ==================== SAĞ SÜTUN: CANLI SOHBET & SORU ALANI (HOCANIN GÖRÜNÜMÜYLE AYNI) ==================== -->
+        <!-- 📱 TELEFON & TABLET SEKMELİ KONTROL ÇUBUĞU (YOUTUBE LIVE / TWITCH DÜZENİ) -->
+    <div id="mobileStudentTabs" class="mobile-student-tabs" style="display: none;">
+      <button type="button" class="mobile-tab-btn active" id="tabBtn_chat" onclick="switchMobileStudentTab('chat')">
+        <i class="fas fa-comments"></i> <span>Sohbet</span>
+      </button>
+      <button type="button" class="mobile-tab-btn" id="tabBtn_audio" onclick="switchMobileStudentTab('audio')">
+        <i class="fas fa-sliders-h"></i> <span>Ses Mikseri</span>
+      </button>
+      <button type="button" class="mobile-tab-btn" id="tabBtn_info" onclick="switchMobileStudentTab('info')">
+        <i class="fas fa-info-circle"></i> <span>Ders Bilgisi</span>
+      </button>
+    </div>
+
+    <!-- 🎛️ MOBİL SES MİKSERİ SEKMESİ (FERAH & DOKUNMATİK) -->
+    <div id="mobileTabAudio" class="mobile-tab-content" style="display: none;">
+      <div class="mobile-audio-card">
+        <div class="mobile-audio-card-header">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 20px;">🎛️</span>
+            <div>
+              <div style="font-size: 0.92rem; font-weight: 800; color: #fff;">Canlı Ses Dengesi & Mikser</div>
+              <div style="font-size: 0.74rem; color: #94a3b8;">Hoca ve bilgisayar sesini ayrı ayrı ayarlayabilirsiniz</div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-gold btn-sm" onclick="toggleStudentSpeaker()" id="mobileBtnSpeakerToggle" style="font-size: 0.78rem; padding: 4px 10px; font-weight: 700;">
+            <i class="fas fa-volume-up"></i> Hoparlör Açık
+          </button>
+        </div>
+
+        <!-- KANAL 1: HOCA MİKROFONU -->
+        <div class="mobile-audio-channel">
+          <div class="channel-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="channel-badge badge-mic">🎙️ Hoca Mikrofonu</span>
+              <span class="channel-val" id="mobileMicGainText">100%</span>
+            </div>
+            <button type="button" class="btn-mute-toggle" onclick="toggleStudentMicMute()" id="mobileMicMuteBtn">
+              <i class="fas fa-microphone"></i> Kapat
+            </button>
+          </div>
+          <div class="slider-wrapper">
+            <input type="range" min="0" max="1.5" step="0.05" value="1.0" id="mobileMicSlider" oninput="updateMobileMicSlider(this.value)" class="touch-audio-slider slider-gold">
+          </div>
+          <div class="preset-row">
+            <button type="button" onclick="updateMobileMicSlider(0.0)" class="preset-btn">Sessiz</button>
+            <button type="button" onclick="updateMobileMicSlider(0.5)" class="preset-btn">%50</button>
+            <button type="button" onclick="updateMobileMicSlider(1.0)" class="preset-btn active">%100</button>
+            <button type="button" onclick="updateMobileMicSlider(1.5)" class="preset-btn boost">🔥 %150 Yükselt</button>
+          </div>
+        </div>
+
+        <!-- KANAL 2: BİLGİSAYAR / CAD SESİ -->
+        <div class="mobile-audio-channel">
+          <div class="channel-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="channel-badge badge-cad">💻 MatrixGold / CAD Sesi</span>
+              <span class="channel-val" id="mobileMusicGainText">100%</span>
+            </div>
+            <button type="button" class="btn-mute-toggle" onclick="toggleStudentMusicMute()" id="mobileMusicMuteBtn">
+              <i class="fas fa-volume-up"></i> Kapat
+            </button>
+          </div>
+          <div class="slider-wrapper">
+            <input type="range" min="0" max="1.5" step="0.05" value="1.0" id="mobileMusicSlider" oninput="updateMobileMusicSlider(this.value)" class="touch-audio-slider slider-blue">
+          </div>
+          <div class="preset-row">
+            <button type="button" onclick="updateMobileMusicSlider(0.0)" class="preset-btn">Sessiz</button>
+            <button type="button" onclick="updateMobileMusicSlider(0.5)" class="preset-btn">%50</button>
+            <button type="button" onclick="updateMobileMusicSlider(1.0)" class="preset-btn active">%100</button>
+            <button type="button" onclick="updateMobileMusicSlider(1.5)" class="preset-btn boost">🔥 %150 Yükselt</button>
+          </div>
+        </div>
+
+        <!-- HIZLI SES DÜZELTME VE İZİN BUTONU -->
+        <div style="margin-top: 10px; display: flex; gap: 8px;">
+          <button type="button" onclick="unlockAllStudentAudio()" class="btn btn-secondary btn-sm" style="flex: 1; padding: 10px; font-weight: 700; font-size: 0.8rem; border-color: rgba(16,185,129,0.4); color: #34d399;">
+            <i class="fas fa-volume-up"></i> 🔊 Sesi Yenile / İzin Ver
+          </button>
+          <button type="button" onclick="manualReconnectStream()" class="btn btn-secondary btn-sm" style="flex: 1; padding: 10px; font-weight: 700; font-size: 0.8rem; border-color: rgba(56,189,248,0.4); color: #38bdf8;">
+            <i class="fas fa-sync-alt"></i> 🔄 Yayını Tazele
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ℹ️ MOBİL DERS BİLGİSİ VE EĞİTMEN SEKMESİ -->
+    <div id="mobileTabInfo" class="mobile-tab-content" style="display: none;">
+      <div class="mobile-info-card">
+        <div class="info-block">
+          <div style="font-size: 0.75rem; color: var(--gold-light); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">CANLI EĞİTİM</div>
+          <div style="font-size: 1.05rem; font-weight: 800; color: #fff; margin-top: 3px;" id="mobileInfoLessonTitle">Bilgisayar Destekli Sadekârlık ve Mücevher Tasarımı Masterclass</div>
+          <div style="font-size: 0.82rem; color: #94a3b8; margin-top: 4px;">Usta Eğitmen: <b style="color: #fde047;">Özkan Hoca</b></div>
+        </div>
+
+        <div class="info-action-list">
+          <button type="button" class="info-action-btn gold" onclick="openStudentDigitalBookModal()">
+            <span class="icon">📖</span>
+            <div class="btn-text">
+              <div class="title">MatrixGold Dijital El Kitabı</div>
+              <div class="desc">Ders esnasında modüllere, kısayollara ve sesli rehbere bakın</div>
+            </div>
+            <i class="fas fa-chevron-right arrow"></i>
+          </button>
+
+          <a href="https://wa.me/905377217886?text=Merhaba%20Özkan%20Hocam,%20canlı%20dersteyim" target="_blank" class="info-action-btn green" style="text-decoration: none;">
+            <span class="icon">💬</span>
+            <div class="btn-text">
+              <div class="title">WhatsApp Eğitmen Danışma Hattı</div>
+              <div class="desc">Doğrudan Özkan Hoca'ya mesaj veya ekran fotoğrafı gönderin</div>
+            </div>
+            <i class="fas fa-chevron-right arrow"></i>
+          </a>
+
+          <button type="button" class="info-action-btn blue" onclick="manualReconnectStream()">
+            <span class="icon">🔄</span>
+            <div class="btn-text">
+              <div class="title">Canlı Yayını Yeniden Bağla</div>
+              <div class="desc">Donma veya internet yavaşlamasında bağlantıyı tazeler</div>
+            </div>
+            <i class="fas fa-chevron-right arrow"></i>
+          </button>
+
+          <button type="button" class="info-action-btn red" onclick="confirmLeaveLesson()">
+            <span class="icon">🚪</span>
+            <div class="btn-text">
+              <div class="title">Dersten Güvenli Çıkış Yap</div>
+              <div class="desc">Canlı dersten ayrılıp bekleme ekranına döner</div>
+            </div>
+            <i class="fas fa-chevron-right arrow"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+<!-- ==================== SAĞ SÜTUN: CANLI SOHBET & SORU ALANI (HOCANIN GÖRÜNÜMÜYLE AYNI) ==================== -->
 
 
 
@@ -11215,275 +10242,42 @@ Eğitmen bilgisayardan <b>"🔴 Dersi Başlat"</b> dediğinde soru hattınız ve
 
 
       <!-- Modal Üst Çubuk (Başlık & Kontrol Butonları) -->
-
-
-
-
-
-
-
-      <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 18px; border-bottom: 1.5px solid rgba(212, 175, 55, 0.35); background: linear-gradient(90deg, rgba(20, 27, 45, 0.98) 0%, rgba(11, 15, 25, 0.98) 100%); flex-shrink: 0; gap: 12px; flex-wrap: wrap;">
-
-
-
-
-
-
-
-        <div style="display: flex; align-items: center; gap: 12px;">
-
-
-
-
-
-
-
-          <span style="font-size: 24px; filter: drop-shadow(0 0 10px rgba(245, 185, 66, 0.6));">📖</span>
-
-
-
-
-
-
-
+      <div id="studentDigitalBookHeader" class="book-modal-header" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 18px; border-bottom: 1.5px solid rgba(212, 175, 55, 0.35); background: linear-gradient(90deg, rgba(20, 27, 45, 0.98) 0%, rgba(11, 15, 25, 0.98) 100%); flex-shrink: 0; gap: 12px; flex-wrap: wrap;">
+        <div class="book-header-left" style="display: flex; align-items: center; gap: 10px;">
+          <button type="button" onclick="closeStudentDigitalBookModal()" class="btn btn-sm btn-book-close" style="background: rgba(239, 68, 68, 0.25); border: 1px solid #ef4444; color: #fca5a5; padding: 5px 12px; font-weight: 800; font-size: 0.82rem; cursor: pointer; border-radius: 6px; display: inline-flex; align-items: center; gap: 5px;" title="Kitabı Kapat">
+            <i class="fas fa-arrow-left"></i> <span>Kapat</span>
+          </button>
+          <span style="font-size: 22px; filter: drop-shadow(0 0 10px rgba(245, 185, 66, 0.6));">📖</span>
           <div>
-
-
-
-
-
-
-
-            <div style="font-size: 0.72rem; font-weight: 800; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 1.2px; display: flex; align-items: center; gap: 6px;">
-
-
-
-
-
-
-
+            <div class="book-sub-title" style="font-size: 0.72rem; font-weight: 800; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 1.2px; display: flex; align-items: center; gap: 6px;">
               <span>ERN TASARIM AKADEMİ</span> &bull; <span>7/24 DİJİTAL EL KİTABI</span>
-
-
-
-
-
-
-
             </div>
-
-
-
-
-
-
-
-            <h3 style="margin: 0; color: #ffffff; font-size: 1.05rem; font-weight: 800; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;">
-
-
-
-
-
-
-
+            <h3 class="book-title-main" style="margin: 0; color: #ffffff; font-size: 1.05rem; font-weight: 800; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;">
               MatrixGold Dijital Kitap (M-Kitap)
-
-
-
-
-
-
-
-              <span style="font-size: 0.72rem; padding: 2px 8px; border-radius: 10px; background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; color: #38bdf8; font-weight: 700;">8 Dil &bull; Sesli Okuma &bull; 22 Modül</span>
-
-
-
-
-
-
-
+              <span class="book-badge" style="font-size: 0.72rem; padding: 2px 8px; border-radius: 10px; background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; color: #38bdf8; font-weight: 700;">8 Dil &bull; Sesli Okuma &bull; 22 Modül</span>
             </h3>
-
-
-
-
-
-
-
           </div>
-
-
-
-
-
-
-
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         <!-- Sağ Kontroller: Tam Ekran, Yeni Sekme, Kapat -->
-
-
-
-
-
-
-
-        <div style="display: flex; align-items: center; gap: 8px;">
-
-
-
-
-
-
-
+        <div class="book-header-right" style="display: flex; align-items: center; gap: 8px;">
           <button type="button" id="btnToggleBookFullscreen" class="btn btn-secondary btn-sm" onclick="toggleBookFullscreen()" style="font-size: 0.78rem; padding: 5px 12px; border-color: rgba(245, 185, 66, 0.45); color: var(--gold-light);" title="Tam Ekran Yap / Eski Boyuta Dön">
-
-
-
-
-
-
-
             <i class="fas fa-expand" id="iconBookFullscreen"></i> <span id="textBookFullscreen">Tam Ekran</span>
-
-
-
-
-
-
-
           </button>
-
-
-
-
-
-
-
-          <button type="button" onclick="resetBookLicenseDemo()" class="btn btn-secondary btn-sm" style="font-size: 0.78rem; padding: 5px 12px; border-color: rgba(239, 68, 68, 0.4); color: #f87171;" title="Kitap Lisansını Sıfırla ve Demo / Paywall Modunu Aç">
-
-
-
-
-
-
-
+          <button type="button" onclick="resetBookLicenseDemo()" class="btn btn-secondary btn-sm btn-book-demo" style="font-size: 0.78rem; padding: 5px 12px; border-color: rgba(239, 68, 68, 0.4); color: #f87171;" title="Kitap Lisansını Sıfırla ve Demo / Paywall Modunu Aç">
             <i class="fas fa-key"></i> Demo/Lisans Sıfırla
-
-
-
-
-
-
-
           </button>
-
-
-
-
-
-
-
-          <a href="/kitap/matrixgold.html" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.78rem; padding: 5px 12px; border-color: rgba(56, 189, 248, 0.4); color: #38bdf8; text-decoration: none;" title="İkinci Monitör / Ayrı Sekmede Aç">
-
-
-
-
-
-
-
-            <i class="fas fa-external-link-alt"></i> Ayrı Sekmede Aç
-
-
-
-
-
-
-
+          <a href="/kitap/matrixgold.html" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.78rem; padding: 5px 10px; border-color: rgba(56, 189, 248, 0.4); color: #38bdf8; text-decoration: none;" title="İkinci Monitör / Ayrı Sekmede Aç">
+            <i class="fas fa-external-link-alt"></i> <span>Ayrı Sekme</span>
           </a>
-
-          <button type="button" onclick="triggerStudentBookAudioUnlock()" class="btn btn-secondary btn-sm" style="font-size: 0.78rem; padding: 5px 12px; border-color: rgba(16, 185, 129, 0.4); color: #34d399; font-weight: 800;" title="Hoparlörü ve Ses Motorunu Aktifleştir">
-
-            <i class="fas fa-volume-up"></i> 🔊 Sesi Aç / İzin Ver
-
+          <button type="button" onclick="triggerStudentBookAudioUnlock()" class="btn btn-secondary btn-sm" style="font-size: 0.78rem; padding: 5px 10px; border-color: rgba(16, 185, 129, 0.4); color: #34d399; font-weight: 800;" title="Hoparlörü ve Ses Motorunu Aktifleştir">
+            <i class="fas fa-volume-up"></i> <span>Ses Aç</span>
           </button>
-
-          <button type="button" onclick="if(window.AndroidApp&&window.AndroidApp.toggleOrientation){window.AndroidApp.toggleOrientation();}" class="btn btn-secondary btn-sm" style="font-size: 0.78rem; padding: 5px 12px; border-color: rgba(245, 158, 11, 0.4); color: #fde047;" title="Ekranı Yan veya Dikey Döndür">
-
-            <i class="fas fa-sync-alt"></i> 🔄 Yan Çevir
-
+          <button type="button" onclick="if(window.AndroidApp&&window.AndroidApp.toggleOrientation){window.AndroidApp.toggleOrientation();}" class="btn btn-secondary btn-sm" style="font-size: 0.78rem; padding: 5px 10px; border-color: rgba(245, 158, 11, 0.4); color: #fde047;" title="Ekranı Yan veya Dikey Döndür">
+            <i class="fas fa-sync-alt"></i> <span>Döndür</span>
           </button>
-
-
-
-
-
-
-
-
-
-          <button type="button" onclick="closeStudentDigitalBookModal()" class="btn btn-sm" style="background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 5px 12px; font-weight: 800; font-size: 0.82rem; cursor: pointer;" title="Kitabı Kapat (Esc)">
-
-
-
-
-
-
-
-            <i class="fas fa-times"></i> Kapat
-
-
-
-
-
-
-
-          </button>
-
-
-
-
-
-
-
         </div>
-
-
-
-
-
-
-
       </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       <!-- Modal Gövdesi: iFrame Yükleyici & Canlı Kitap -->
 
 
@@ -36889,301 +35683,170 @@ Eğitmen bilgisayardan <b>"🔴 Dersi Başlat"</b> dediğinde soru hattınız ve
 
 
 
-    function applyStudentLayout(mode) {
+    
+    // =========================================================================
+    // 📱 MOBİL SEKMELİ YÖNETİM & SES MİKSERİ SENKRONİZASYONU
+    // =========================================================================
+    window.currentMobileStudentTab = 'chat';
+    function switchMobileStudentTab(tabName) {
+      window.currentMobileStudentTab = tabName;
+      ['chat', 'audio', 'info'].forEach(function(t) {
+        var btn = document.getElementById('tabBtn_' + t);
+        if (btn) {
+          if (t === tabName) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+      });
 
+      var rightCol = document.getElementById('rightCol');
+      var audioTab = document.getElementById('mobileTabAudio');
+      var infoTab = document.getElementById('mobileTabInfo');
 
+      if (rightCol) {
+        if (tabName === 'chat') {
+          rightCol.style.setProperty('display', 'flex', 'important');
+          rightCol.style.setProperty('flex', '1 1 auto', 'important');
+          rightCol.style.setProperty('width', '100%', 'important');
+          rightCol.style.setProperty('height', 'auto', 'important');
+        } else {
+          rightCol.style.setProperty('display', 'none', 'important');
+        }
+      }
 
+      if (audioTab) {
+        if (tabName === 'audio') {
+          audioTab.style.setProperty('display', 'flex', 'important');
+        } else {
+          audioTab.style.setProperty('display', 'none', 'important');
+        }
+      }
+
+      if (infoTab) {
+        if (tabName === 'info') {
+          infoTab.style.setProperty('display', 'flex', 'important');
+        } else {
+          infoTab.style.setProperty('display', 'none', 'important');
+        }
+      }
+    }
+
+    function updateMobileMicSlider(val) {
+      setStudentMicGain(val);
+      var deskSlider = document.getElementById('studentMicGainSlider');
+      if (deskSlider && deskSlider.value != val) deskSlider.value = val;
+      var mobSlider = document.getElementById('mobileMicSlider');
+      if (mobSlider && mobSlider.value != val) mobSlider.value = val;
+      var mobText = document.getElementById('mobileMicGainText');
+      if (mobText) mobText.innerText = Math.round(parseFloat(val) * 100) + '%';
+    }
+
+    function updateMobileMusicSlider(val) {
+      setStudentMusicGain(val);
+      var deskSlider = document.getElementById('studentMusicGainSlider');
+      if (deskSlider && deskSlider.value != val) deskSlider.value = val;
+      var mobSlider = document.getElementById('mobileMusicSlider');
+      if (mobSlider && mobSlider.value != val) mobSlider.value = val;
+      var mobText = document.getElementById('mobileMusicGainText');
+      if (mobText) mobText.innerText = (parseFloat(val) <= 0.02) ? '0% (KAPALI)' : (Math.round(parseFloat(val) * 100) + '%');
+    }
+
+    function toggleStudentMicMute() {
+      if (studentMicGainValue > 0.02) {
+        window.prevStudentMicGain = studentMicGainValue;
+        updateMobileMicSlider(0.0);
+        var mBtn = document.getElementById('mobileMicMuteBtn');
+        if (mBtn) mBtn.innerHTML = '<i class="fas fa-microphone-slash"></i> Aç';
+      } else {
+        var restored = (window.prevStudentMicGain && window.prevStudentMicGain > 0.05) ? window.prevStudentMicGain : 1.0;
+        updateMobileMicSlider(restored);
+        var mBtn = document.getElementById('mobileMicMuteBtn');
+        if (mBtn) mBtn.innerHTML = '<i class="fas fa-microphone"></i> Kapat';
+      }
+    }
+
+function applyStudentLayout(mode) {
       const ws = document.getElementById("studioWorkspace");
-
-
-
       const centerCol = document.getElementById("centerCol");
-
-
-
       const rightCol = document.getElementById("rightCol");
-
-
-
       const resizerRight = document.getElementById("resizerRight");
-
-
-
       const resizerVert = document.getElementById("resizerStudentVert");
-
-
-
-
-
-
+      const tabs = document.getElementById("mobileStudentTabs");
+      const audioTab = document.getElementById("mobileTabAudio");
+      const infoTab = document.getElementById("mobileTabInfo");
 
       const isLandscape = isDeviceLandscape();
-
-
-
       const isMobile = window.innerWidth <= 900 || window.innerHeight <= 600 || isLandscape;
 
+      const isLocked = document.body.classList.contains("student-locked") ||
+        (document.getElementById("videoLockOverlay") && document.getElementById("videoLockOverlay").style.display !== "none");
 
-
-
-
-
+      if (isLocked) {
+        // 🔒 KİLİTLİ / ÖDEME AŞAMASI: Sohbet, mikser ve resizer gizlenir, ödeme kartı 100% ekranı kaplar
+        if (ws) {
+          ws.style.flexDirection = "column";
+          ws.classList.remove("layout-row");
+          ws.classList.add("layout-column");
+        }
+        if (centerCol) {
+          centerCol.style.setProperty("width", "100%", "important");
+          centerCol.style.setProperty("height", "100%", "important");
+          centerCol.style.setProperty("flex", "1 1 100%", "important");
+          centerCol.style.removeProperty("max-height");
+        }
+        if (rightCol) rightCol.style.setProperty("display", "none", "important");
+        if (resizerRight) resizerRight.style.setProperty("display", "none", "important");
+        if (resizerVert) resizerVert.style.setProperty("display", "none", "important");
+        if (tabs) tabs.style.setProperty("display", "none", "important");
+        if (audioTab) audioTab.style.setProperty("display", "none", "important");
+        if (infoTab) infoTab.style.setProperty("display", "none", "important");
+        return;
+      }
 
       if (isLandscape && isMobile) {
-
-
-
-        // Yatay telefon modu (Landscape): Video tam ekran sinema modu, chat gizli
-
-
-
+        // 🎬 Yatay telefon modu (Landscape): Video tam ekran sinema modu, chat ve tablar gizli
         if (ws) {
-
-
-
           ws.style.flexDirection = "row";
-
-
-
           ws.classList.remove("layout-column");
-
-
-
           ws.classList.add("layout-row");
-
-
-
         }
-
-
-
         if (centerCol) {
-
-
-
-          centerCol.style.height = "100%";
-
-
-
-          centerCol.style.width = "100%";
-
-
-
-          centerCol.style.flex = "1";
-
-
-
-        }
-
-
-
-        if (rightCol) rightCol.style.display = "none";
-
-
-
-        if (resizerRight) resizerRight.style.display = "none";
-
-
-
-        if (resizerVert) resizerVert.style.display = "none";
-
-
-
-        return;
-
-
-
-      }
-
-
-
-
-
-
-
-            if (isMobile) {
-
-
-
-        if (ws) {
-
-
-
-          ws.style.flexDirection = "column";
-
-
-
-          ws.classList.remove("layout-row");
-
-
-
-          ws.classList.add("layout-column");
-
-
-
-        }
-
-
-
-
-
-
-
-        if (isStudentChatHidden) {
-
-
-
-          // Sohbet Gizlendi: Video tam ekran
-
-
-
-          if (centerCol) {
-
-
-
-            centerCol.style.setProperty("width", "100%", "important");
-
-
-
-            centerCol.style.setProperty("height", "100%", "important");
-
-
-
-            centerCol.style.setProperty("flex", "1 1 auto", "important");
-
-
-
-          }
-
-
-
-          if (rightCol) rightCol.style.setProperty("display", "none", "important");
-
-
-
-          if (resizerVert) resizerVert.style.setProperty("display", "flex", "important");
-
-
-
-          return;
-
-
-
-        }
-
-
-
-
-
-
-
-        // Normal Canlı Mod: Orana göre ayarla (Varsayılan %65 video / %35 chat)
-
-
-
-        const savedH = localStorage.getItem("student_video_h");
-
-
-
-        const wsH = ws ? (ws.clientHeight || (window.innerHeight - 50)) : (window.innerHeight - 50);
-
-
-
-        let videoH = savedH ? parseInt(savedH, 10) : Math.round(wsH * 0.65);
-
-
-
-        videoH = Math.max(160, Math.min(wsH - 80, videoH));
-
-
-
-
-
-
-
-        if (centerCol) {
-
-
-
+          centerCol.style.setProperty("height", "100%", "important");
           centerCol.style.setProperty("width", "100%", "important");
-
-
-
-          centerCol.style.setProperty("height", videoH + "px", "important");
-
-
-
-          centerCol.style.setProperty("flex", "0 0 " + videoH + "px", "important");
-
-
-
-          document.documentElement.style.setProperty("--student-video-h", videoH + "px");
-
-
-
+          centerCol.style.setProperty("flex", "1 1 100%", "important");
         }
-
-
-
-
-
-
-
-        if (resizerVert) {
-
-
-
-          resizerVert.style.setProperty("display", "flex", "important");
-
-
-
-        }
-
-
-
-
-
-
-
-        if (rightCol) {
-
-
-
-          rightCol.style.setProperty("display", "flex", "important");
-
-
-
-          rightCol.style.setProperty("width", "100%", "important");
-
-
-
-          rightCol.style.setProperty("height", "auto", "important");
-
-
-
-          rightCol.style.setProperty("flex", "1 1 auto", "important");
-
-
-
-          rightCol.classList.remove("collapsed");
-
-
-
-        }
-
-
-
+        if (rightCol) rightCol.style.setProperty("display", "none", "important");
+        if (resizerRight) resizerRight.style.setProperty("display", "none", "important");
+        if (resizerVert) resizerVert.style.setProperty("display", "none", "important");
+        if (tabs) tabs.style.setProperty("display", "none", "important");
+        if (audioTab) audioTab.style.setProperty("display", "none", "important");
+        if (infoTab) infoTab.style.setProperty("display", "none", "important");
         return;
-
-
-
       }
 
+      if (isMobile) {
+        // 📱 Dik telefon modu (Portrait Canlı): Video üstte 16:9, altında Mobil Tablar
+        if (ws) {
+          ws.style.flexDirection = "column";
+          ws.classList.remove("layout-row");
+          ws.classList.add("layout-column");
+        }
+        if (centerCol) {
+          centerCol.style.setProperty("width", "100%", "important");
+          centerCol.style.setProperty("height", "auto", "important");
+          centerCol.style.setProperty("flex", "0 0 auto", "important");
+        }
+        if (resizerVert) resizerVert.style.setProperty("display", "none", "important");
+        if (resizerRight) resizerRight.style.setProperty("display", "none", "important");
+        if (tabs) tabs.style.setProperty("display", "flex", "important");
 
+        switchMobileStudentTab(window.currentMobileStudentTab || 'chat');
+        return;
+      }
 
-
-
-
+      // 💻 Masaüstü Modu: Mobil tabları gizle
+      if (tabs) tabs.style.setProperty("display", "none", "important");
+      if (audioTab) audioTab.style.setProperty("display", "none", "important");
+      if (infoTab) infoTab.style.setProperty("display", "none", "important");
 
       if (mode) studentLayoutMode = mode;
 
