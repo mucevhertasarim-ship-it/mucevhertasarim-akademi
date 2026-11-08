@@ -699,7 +699,7 @@
         min-height: 0 !important;
         transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1) !important;
         will-change: transform;
-        touch-action: pan-y !important;
+        touch-action: pan-x pan-y !important;
       }
 
       .mobile-carousel-slide {
@@ -1004,8 +1004,14 @@
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
-        padding: 10px 10px 30px 10px !important;
+        padding: 10px 10px 40px 10px !important;
         background: radial-gradient(circle at center top, rgba(17, 24, 39, 0.95) 0%, rgba(6, 10, 20, 0.99) 100%) !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        overscroll-behavior-y: contain !important;
+        height: 100% !important;
+        max-height: 100% !important;
+        touch-action: pan-y !important;
       }
 
       /* Sol ve Sağ Gösteren Yön İşaretleri (Oklar) */
@@ -1113,8 +1119,14 @@
       #slideScreenMenus {
         display: flex !important;
         flex-direction: column !important;
-        padding: 10px 10px 30px 10px !important;
+        padding: 10px 10px 40px 10px !important;
         background: radial-gradient(circle at center top, rgba(17, 24, 39, 0.95) 0%, rgba(6, 10, 20, 0.99) 100%) !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        overscroll-behavior-y: contain !important;
+        height: 100% !important;
+        max-height: 100% !important;
+        touch-action: pan-y !important;
       }
 
       .mobile-menus-header {
@@ -2113,7 +2125,18 @@
         padding-bottom: 30px !important;
       }
     }
-</style>
+
+    /* KULLANICI İSTEĞİ: ALT KISIMDAKİ TEKRARLI KİTAP/OYUN VE KODUM VAR BUTONLARINI TAMAMEN GİZLE */
+    #waitingExtraButtonsBox, #tabBtnRegister, #tabBtnCode {
+      display: none !important;
+    }
+    @media (max-width: 950px) {
+      #deviceChoiceBlockPcOnly {
+        display: none !important;
+      }
+    }
+
+  </style>
 
 
 
@@ -4408,8 +4431,8 @@
                     <div style="font-size: 0.95rem; font-weight: 800; color: #ffffff;" id="savedStudentNameText">--</div>
                     <div style="font-size: 0.78rem; color: #38bdf8; font-family: monospace; margin-bottom: 10px;" id="savedStudentPhoneText">--</div>
                     <div style="display: flex; gap: 6px;">
-                      <button type="button" class="btn btn-gold btn-sm" style="flex: 1; padding: 8px 12px; font-size: 0.84rem; font-weight: 800;" onclick="submitRegistrationRequest()">
-                        <i class="fas fa-credit-card"></i> 💳 IBAN Bilgisi İste
+                      <button type="button" id="btnQuickJoinRequest" class="btn btn-gold btn-sm" style="flex: 1; padding: 8px 12px; font-size: 0.84rem; font-weight: 800;" onclick="openFeeAndIbanBox()">
+                        <i class="fas fa-graduation-cap"></i> 🎓 Derse Katılma Talebi
                       </button>
                       <button type="button" class="btn btn-secondary btn-sm" onclick="showEditRegistrationForm()" style="font-size: 0.75rem; padding: 4px 10px; color: #cbd5e1;">
                         <i class="fas fa-edit"></i> Değiştir
@@ -4440,7 +4463,7 @@
                       <input type="tel" id="regStudentPhone" class="form-control" placeholder="05XX XXX XX XX" style="font-size: 0.88rem; padding: 8px 10px; background: #070a12; color: #fff; border-color: rgba(212,175,55,0.4);">
                     </div>
 
-                    <div style="margin-bottom: 12px; text-align: left;">
+                    <div class="pc-only" id="deviceChoiceBlockPcOnly" style="margin-bottom: 12px; text-align: left;">
                       <label style="font-size: 0.74rem; color: var(--gold-light); font-weight: 700; display: block; margin-bottom: 6px;">🖥️ Derse Hangi Cihazdan Katılacaksınız?</label>
                       <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;">
                         <div id="choiceCardPc" onclick="selectDeviceChoice('pc')" style="cursor: pointer; border: 1.5px solid var(--gold-primary); background: rgba(212, 175, 55, 0.14); border-radius: 8px; padding: 7px 4px; text-align: center; transition: all 0.2s;">
@@ -4462,38 +4485,45 @@
                       <input type="hidden" id="selectedDeviceChoice" value="pc">
                     </div>
 
-                    <button type="button" class="btn btn-gold" id="btnSubmitReg" style="width: 100%; padding: 10px; font-size: 0.9rem; font-weight: 800; box-shadow: 0 0 15px rgba(212,175,55,0.4); display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="submitRegistrationRequest()">
-                      <i class="fas fa-credit-card"></i> <span>Ödeme Yapmak İçin IBAN İste</span>
+                    <button type="button" class="btn btn-gold" id="btnSubmitReg" style="width: 100%; padding: 10px; font-size: 0.9rem; font-weight: 800; box-shadow: 0 0 15px rgba(212,175,55,0.4); display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="openFeeAndIbanBox()">
+                      <i class="fas fa-graduation-cap"></i> <span>🎓 Derse Katılma Talebi</span>
                     </button>
                   </div>
                 </div>
 
-                <!-- 2. BLOK: EĞİTİM BİLGİSİ & DERS ÜCRETİ / CANLI KUR TL KUTUSU -->
-                <div style="background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 10px; padding: 12px; margin-bottom: 12px; text-align: center;">
-                  <div style="font-size: 0.88rem; font-weight: 800; color: #fff; margin-bottom: 4px;">
-                    💎 Bilgisayar Üzerinde Sadekârlık ve Mücevher Tasarımı Eğitimi
+                <!-- 2. BLOK: DERSE KATILMA TALEBİNE BASILINCA AÇILAN ÜCRET VE IBAN İSTE KUTUSU (ANA EKRANDA GİZLİDİR) -->
+                <div id="stage1FeeAndIbanBox" style="display: none; background: linear-gradient(135deg, rgba(212, 175, 55, 0.14) 0%, rgba(15, 23, 42, 0.96) 100%); border: 1.5px solid var(--gold-primary); border-radius: 12px; padding: 14px; margin-bottom: 12px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.6), 0 0 20px rgba(212,175,55,0.2);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <div style="font-size: 0.86rem; font-weight: 800; color: #fbbf24;">
+                      💎 Canlı Eğitim Katılım & Ücret Bilgisi
+                    </div>
+                    <button type="button" onclick="closeFeeAndIbanBox()" style="background: none; border: none; color: #94a3b8; font-size: 1.1rem; cursor: pointer;" title="Kapat">&times;</button>
                   </div>
-                  <div style="font-size: 0.78rem; color: #cbd5e1; line-height: 1.4; margin-bottom: 10px;">
-                    Bu eğitim platformu <b>ücretlidir</b>. Bilgisayar üzerinde sadekârlık ve mücevher tasarımı derslerinden yararlanmak için katılım ve ödeme onayı gerekmektedir.
+                  <div style="font-size: 0.76rem; color: #cbd5e1; line-height: 1.4; margin-bottom: 10px;">
+                    Bilgisayar üzerinde sadekârlık ve mücevher tasarımı canlı dersine katılmak için güncel ders ücreti:
                   </div>
 
                   <!-- 💵 DERS ÜCRETİ & CANLI KUR TL BİLGİ KUTUSU -->
-                  <div style="display: flex; gap: 8px;">
-                    <div style="flex: 1; background: rgba(212, 175, 55, 0.12); border: 1.5px solid var(--gold-primary); border-radius: 10px; padding: 10px 8px; text-align: center;">
+                  <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                    <div style="flex: 1; background: rgba(212, 175, 55, 0.14); border: 1.5px solid var(--gold-primary); border-radius: 10px; padding: 10px 8px; text-align: center;">
                       <div style="font-size: 0.72rem; color: var(--gold-light); font-weight: 700; text-transform: uppercase;">💵 Ders Ücreti</div>
                       <div style="font-size: 1.3rem; font-weight: 900; color: #fbbf24; margin: 2px 0;" id="stage1PriceUsd">50 $</div>
                       <div style="font-size: 0.68rem; color: #94a3b8;">USD / Dolar</div>
                     </div>
-                    <div style="flex: 1; background: rgba(16, 185, 129, 0.12); border: 1.5px solid #10b981; border-radius: 10px; padding: 10px 8px; text-align: center;">
+                    <div style="flex: 1; background: rgba(16, 185, 129, 0.14); border: 1.5px solid #10b981; border-radius: 10px; padding: 10px 8px; text-align: center;">
                       <div style="font-size: 0.72rem; color: #34d399; font-weight: 700; text-transform: uppercase;">🇹🇷 Canlı Kur TL</div>
                       <div style="font-size: 1.3rem; font-weight: 900; color: #34d399; margin: 2px 0;" id="stage1PriceTry">~2.509 ₺</div>
                       <div style="font-size: 0.68rem; color: #6ee7b7;" id="stage1RateBadge">1 $ = 50.18 TL</div>
                     </div>
                   </div>
+
+                  <button type="button" class="btn btn-gold" id="btnConfirmRequestIban" style="width: 100%; padding: 11px; font-size: 0.92rem; font-weight: 800; box-shadow: 0 0 20px rgba(212,175,55,0.45); display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="submitRegistrationRequest()">
+                    <i class="fas fa-credit-card"></i> <span>💳 Ödeme Yapmak İçin IBAN İste</span>
+                  </button>
                 </div>
 
-                <!-- 3. BLOK: 1. IBAN BİLGİSİ İSTE & KODUM VAR (GİRİŞ) BUTONLARI -->
-                <div style="display: flex; gap: 6px; margin-bottom: 10px;">
+                <!-- 3. BLOK: 1. IBAN BİLGİSİ İSTE & KODUM VAR (GİRİŞ) BUTONLARI (GİZLENDİ) -->
+                <div style="display: none !important; gap: 6px; margin-bottom: 10px;">
                   <button type="button" id="tabBtnRegister" class="btn btn-gold btn-sm" style="flex: 1; font-size: 0.78rem; font-weight: 700; padding: 8px 6px;" onclick="switchLockTab('register')">
                     <i class="fas fa-credit-card"></i> 1. IBAN Bilgisi İste
                   </button>
@@ -4664,7 +4694,7 @@
 
 
 
-                  <button type="button" class="btn btn-secondary btn-sm" onclick="openDiamondGameModal()" style="width: 100%; padding: 8px 12px; font-size: 0.8rem; font-weight: 800; border-color: rgba(245, 185, 66, 0.6); color: #fbbf24; background: rgba(245, 185, 66, 0.1); border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="openDiamondGameModal()" style="display: none !important;">
 
 
 
@@ -5488,7 +5518,7 @@
 
 
 
-                  <button type="button" class="btn btn-secondary btn-sm" onclick="openDiamondGameModal()" style="width: 100%; padding: 8px 12px; font-size: 0.8rem; font-weight: 800; border-color: rgba(245, 185, 66, 0.6); color: #fbbf24; background: rgba(245, 185, 66, 0.1); border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="openDiamondGameModal()" style="display: none !important;">
 
 
 
@@ -5957,7 +5987,7 @@
 
 
             <!-- Beklerken Kitap ve Mini Oyun Butonları (Mobilde Sağ Menüde Olduğu İçin Ana Ekranda Gizlenir) -->
-            <div id="waitingExtraButtonsBox" class="pc-only" style="margin: 10px 0 10px 0; width: 95%; max-width: 560px; display: flex; flex-direction: column; gap: 8px;">
+            <div id="waitingExtraButtonsBox" style="display: none !important; margin: 10px 0 10px 0; width: 95%; max-width: 560px; flex-direction: column; gap: 8px;">
 
               <button type="button" class="btn btn-secondary btn-sm" onclick="openStudentDigitalBookModal()" style="width: 100%; padding: 10px 18px; font-size: 0.88rem; font-weight: 800; border-color: rgba(56, 189, 248, 0.7); background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(14, 165, 233, 0.1) 100%); color: #38bdf8; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 0 20px rgba(56, 189, 248, 0.22); cursor: pointer;" title="MatrixGold ve Rhino 3D Dijital El Kitabını Oku (22 Modül, Sesli Anlatım)">
 
@@ -12173,6 +12203,10 @@ Eğitmen bilgisayardan <b>"🔴 Dersi Başlat"</b> dediğinde soru hattınız ve
 
 
       if (s1) s1.style.display = (stage === "initial" || stage === "stage1") ? "block" : "none";
+      if (stage === "initial" || stage === "stage1") {
+        const fb = document.getElementById("stage1FeeAndIbanBox");
+        if (fb) fb.style.display = "none";
+      }
 
 
 
@@ -13581,6 +13615,9 @@ Eğitmen bilgisayardan <b>"🔴 Dersi Başlat"</b> dediğinde soru hattınız ve
 
 
                   if (quickBox && quickName) {
+                    quickBox.style.display = "block";
+                    const mFields = document.getElementById("manualRegFormFields");
+                    if (mFields) mFields.style.display = "none";
 
 
 
@@ -13780,7 +13817,7 @@ Eğitmen bilgisayardan <b>"🔴 Dersi Başlat"</b> dediğinde soru hattınız ve
 
 
 
-      const cardPC = document.getElementById("choiceCardPC");
+      const cardPC = document.getElementById("choiceCardPc");
 
 
 
@@ -14815,6 +14852,36 @@ Eğitmen bilgisayardan <b>"🔴 Dersi Başlat"</b> dediğinde soru hattınız ve
 
 
 
+
+    function openFeeAndIbanBox() {
+      const nameInput = document.getElementById("regStudentName");
+      const phoneInput = document.getElementById("regStudentPhone");
+      let name = (nameInput ? nameInput.value.trim() : "") || localStorage.getItem("ern_student_name") || "";
+      let phone = (phoneInput ? phoneInput.value.trim() : "") || localStorage.getItem("ern_student_phone") || "";
+      if (!name || name === "Kuyumcu CAD Öğrencisi") {
+        if (!nameInput || !nameInput.value.trim()) {
+          alert("Lütfen önce adınızı ve soyadınızı yazınız.");
+          if (nameInput) nameInput.focus();
+          return;
+        }
+        name = nameInput.value.trim();
+      }
+      if (!phone) {
+        alert("Lütfen WhatsApp telefon numaranızı yazınız.");
+        if (phoneInput) phoneInput.focus();
+        return;
+      }
+      const feeBox = document.getElementById("stage1FeeAndIbanBox");
+      if (feeBox) {
+        feeBox.style.display = "block";
+        try { feeBox.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch(e) {}
+      }
+    }
+
+    function closeFeeAndIbanBox() {
+      const feeBox = document.getElementById("stage1FeeAndIbanBox");
+      if (feeBox) feeBox.style.display = "none";
+    }
 
     async function submitRegistrationRequest() {
 
@@ -35424,7 +35491,8 @@ function updateLayoutControlUI() {
         if (tabs) tabs.style.setProperty("display", "none", "important");
         if (audioTab) audioTab.style.setProperty("display", "none", "important");
         if (infoTab) infoTab.style.setProperty("display", "none", "important");
-        setupMobileDesktopLayout();
+        if (window.innerWidth <= 950 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) { try { selectDeviceChoice('mobile'); } catch(e) {} }
+      setupMobileDesktopLayout();
         return;
       }
 
@@ -37806,7 +37874,7 @@ function updateLayoutControlUI() {
 
 
 
-          quickBox.style.display = "block";
+          quickBox.style.display = "block"; if (document.getElementById("manualRegFormFields")) document.getElementById("manualRegFormFields").style.display = "none";
 
 
 
