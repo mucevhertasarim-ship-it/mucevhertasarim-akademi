@@ -699,7 +699,7 @@
         min-height: 0 !important;
         transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1) !important;
         will-change: transform;
-        touch-action: pan-x pan-y !important;
+        touch-action: manipulation !important;
       }
 
       .mobile-carousel-slide {
@@ -1011,7 +1011,7 @@
         overscroll-behavior-y: contain !important;
         height: 100% !important;
         max-height: 100% !important;
-        touch-action: pan-y !important;
+        touch-action: manipulation !important;
       }
 
       /* Sol ve Sağ Gösteren Yön İşaretleri (Oklar) */
@@ -1126,7 +1126,7 @@
         overscroll-behavior-y: contain !important;
         height: 100% !important;
         max-height: 100% !important;
-        touch-action: pan-y !important;
+        touch-action: manipulation !important;
       }
 
       .mobile-menus-header {
@@ -39016,41 +39016,56 @@ function updateLayoutControlUI() {
       }
     }
 
-    let touchStartX = 0;
+        let touchStartX = 0;
     let touchStartY = 0;
-    let touchEndX = 0;
-    let touchEndY = 0;
+    let touchCurrentX = 0;
+    let touchCurrentY = 0;
     let isSwiping = false;
+    let isHorizontalGesture = false;
 
     function initMobileCarouselSwipe() {
-      const carousel = document.getElementById("mobileAppCarousel");
-      if (!carousel) return;
+      const workspace = document.querySelector(".studio-workspace") || document.getElementById("mobileAppCarousel") || document.body;
+      if (!workspace) return;
 
-      carousel.addEventListener("touchstart", function(e) {
+      workspace.addEventListener("touchstart", function(e) {
         if (window.innerWidth > 900) return;
         if (e.touches.length !== 1) return;
-        if (e.target.closest('#rightCol') || (document.getElementById('rightCol') && document.getElementById('rightCol').classList.contains('mobile-chat-open'))) {
+        const t = e.target;
+        if (t.closest('#rightCol') || t.closest('input') || t.closest('textarea') || t.closest('select') || t.closest('button') || t.closest('.btn') || t.closest('.card-btn')) {
           isSwiping = false;
           return;
         }
         touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
+        touchCurrentX = touchStartX;
+        touchCurrentY = touchStartY;
         isSwiping = true;
+        isHorizontalGesture = false;
       }, { passive: true });
 
-      carousel.addEventListener("touchmove", function(e) {
-        if (!isSwiping || window.innerWidth > 900) return;
-        touchEndX = e.touches[0].clientX;
-        touchEndY = e.touches[0].clientY;
-      }, { passive: true });
+      workspace.addEventListener("touchmove", function(e) {
+        if (!isSwiping || window.innerWidth > 900 || e.touches.length !== 1) return;
+        touchCurrentX = e.touches[0].clientX;
+        touchCurrentY = e.touches[0].clientY;
+        const diffX = touchCurrentX - touchStartX;
+        const diffY = touchCurrentY - touchStartY;
 
-      carousel.addEventListener("touchend", function(e) {
-        if (!isSwiping || window.innerWidth > 900) return;
+        if (!isHorizontalGesture && Math.abs(diffX) > 8 && Math.abs(diffX) > Math.abs(diffY) * 1.15) {
+          isHorizontalGesture = true;
+        }
+
+        if (isHorizontalGesture && e.cancelable) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+
+      function finishSwipeGesture() {
+        if (!isSwiping) return;
         isSwiping = false;
-        const diffX = touchEndX - touchStartX;
-        const diffY = touchEndY - touchStartY;
+        const diffX = touchCurrentX - touchStartX;
+        const diffY = touchCurrentY - touchStartY;
 
-        if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY)) {
+        if (Math.abs(diffX) > 30 && Math.abs(diffX) > Math.abs(diffY)) {
           if (diffX < 0) {
             if (currentMobileSlide < 2) goToMobileSlide(currentMobileSlide + 1);
           } else {
@@ -39059,9 +39074,13 @@ function updateLayoutControlUI() {
         }
         touchStartX = 0;
         touchStartY = 0;
-        touchEndX = 0;
-        touchEndY = 0;
-      }, { passive: true });
+        touchCurrentX = 0;
+        touchCurrentY = 0;
+        isHorizontalGesture = false;
+      }
+
+      workspace.addEventListener("touchend", finishSwipeGesture, { passive: true });
+      workspace.addEventListener("touchcancel", finishSwipeGesture, { passive: true });
     }
 
     window.addEventListener("resize", function() {
